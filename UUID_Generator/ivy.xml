@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+  <!--
+    * Copyright 2010: Thomson Reuters Global Resources. All Rights Reserved. * Proprietary and
+    Confidential information of TRGR. Disclosure, Use or Reproduction without the written *
+    authorization of TRGR is prohibited
+  -->
+
+<ivy-module version="2.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+  <info organisation="com.cps" module="cps-web" />
+
+  <configurations>
+    <conf name="runtime" description="Modules needed to build the project, except for those that are provided by the container at runtime." />
+    <conf name="compile" extends="runtime" description="Compile-time dependencies. A dependency is needed by the compile conf and not the runtime conf if it is provided by the container at runtime." />
+    <conf name="default" extends="runtime" description="Alias for the runtime conf." />
+    <conf name="test" visibility="private" description="Test dependencies." />
+    
+    <!-- Confs needed for Flex projects only... -->
+    <conf name="flex-debug" description="Needed for building Flex libraries or widgets in debug mode. Populate property flex.debug.lib.dir." />
+    <conf name="flex" description="Needed for building Flex libraries or widgets. Populate property flex.lib.dir." />
+    
+    <!-- Confs needed for webapps only... -->
+    <conf name="deploy" description="Chain the deployment of webapps." />
+  </configurations>
+  
+  <publications>
+    <!-- If you're not building a war, replace the type and ext values with ones that are appropriate. -->
+    <artifact name="cps-web" type="war" ext="war" conf="runtime" />
+	<artifact name="ci_context" type="xml" conf="runtime" />
+	<artifact name="dev_context" type="xml" conf="runtime" />
+	<artifact name="local_context" type="xml" conf="runtime" />
+	<artifact name="prod_context" type="xml" conf="runtime" />
+	<artifact name="qa_context" type="xml" conf="runtime" />
+	<artifact name="test_context" type="xml" conf="runtime" />
+	<artifact name="uat_context" type="xml" conf="runtime" />    
+  </publications>
+
+  <dependencies defaultconf="runtime->default">
+    <!-- Runtime dependencies for Java projects only -->
+   <!--  <dependency org="net.logstash.log4j" name="jsonevent-layout" rev="1.4" /> -->
+     <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.1" />
+    <dependency org="log4j" name="log4j" rev="1.2.16" />
+   <!--  <dependency org="com.thoughtworks.xstream" name="xstream-distribution" rev="1.4.2">
+    		<exclude type="source" ext="jar" org="hibernate-core" name="hibernate-core"  />
+			<exclude type="javadoc" ext="jar" org="hibernate-core" name="hibernate-core" /> 
+    </dependency> -->
+    
+	<!--<dependency org="com.thomsonreuters.cpp.cps" name="CPSSchema" rev="2016.11.1" />-->
+	 <!-- UUID Generator Jar -->
+    <dependency org="com.westgroup.publishingservices.uuidgenerator" name="uuidgenerator" rev="2.1" /> 
+
+
+<dependency name="spring-web" rev="3.1.1.RELEASE" org="org.springframework" force="true"/>
+
+<dependency name="spring-beans" rev="3.1.1.RELEASE" org="org.springframework"/>
+
+<dependency name="spring-context" rev="3.1.1.RELEASE" org="org.springframework"/>
+
+<dependency name="spring-asm" rev="3.1.1.RELEASE" org="org.springframework">
+ <exclude name="commons-logging"  />      
+</dependency>
+
+<dependency name="spring-expression" rev="3.1.1.RELEASE" org="org.springframework"/>
+
+<dependency name="spring-aop" rev="3.1.1.RELEASE" org="org.springframework"/>
+
+<dependency name="spring-context-support" rev="3.1.1.RELEASE" org="org.springframework"/>
+
+<dependency name="spring-tx" rev="3.1.1.RELEASE" org="org.springframework"/>
+
+<dependency name="spring-orm" rev="3.1.1.RELEASE" org="org.springframework"/>
+
+<dependency name="spring-jdbc" rev="3.1.1.RELEASE" org="org.springframework"/> 
+
+   	<dependency org="org.quartz-scheduler" name="quartz" rev="2.0.2" />
+   	<dependency org="org.quartz-scheduler" name="quartz-oracle" rev="2.0.2"/>
+   	<dependency org="c3p0" name="c3p0" rev="0.9.1.1" />
+   	
+
+	<!-- Dependency for Jersey -->
+	<dependency org="com.sun.jersey" name="jersey-bundle" rev="1.11" force="true"/>
+    <dependency org="com.sun.jersey.contribs" name="jersey-spring" rev="1.11" >
+        <!-- <exclude name="jaxb-impl"/> -->
+        <exclude name="spring"/>        
+    </dependency>        
+	<dependency org="com.sun.jersey" name="jersey-json" rev="1.6" />
+	<dependency org="org.aspectj" name="aspectjweaver" rev="1.6.8" />
+	<dependency org="org.json" name="json" rev="20090211"/>
+	        
+    <!-- In-house dependancies -->
+   
+  <!-- <dependency org="com.thomsonreuters.cpp.cps" name="CPSCommon" rev="2016.11.1" />
+<dependency org="com.thomsonreuters.cpp.cps" name="CPSMessages" rev="2016.11.1" force="true"/>
+	<dependency org="com.thomsonreuters.cpp.cps" name="CPSDomain" rev="2017.01.8" />-->
+   
+    <dependency org="com.cps" name="SecurityUtils" rev="2016.11.3" />
+    
+   
+    
+    <!-- Common Flex dependencies (Flex projects only)... -->
+    <!-- <dependency org="com.west.judicial" name="WorkbenchAutomation" rev="0.0.0.+" conf="flex-debug->default" changing="true" /> -->
+    <!-- Flex widget dependencies (Flex widget projects only)... -->
+    <!--
+    <dependency org="com.west.judicial" name="JudicialWorkbenchLibrary" rev="0.0.0.+" changing="true" conf="flex->flex" />
+    <dependency org="com.google.code.fxspy" name="FlexSpy" rev="1.3" conf="flex-debug->default" />
+    -->
+    <!-- Work-bench dependancies
+    <dependency org="tomcat" name="naming-factory" rev="5.5.15"/> <dependency 
+			org="tomcat" name="naming-resources" rev="5.5.15"/> -->
+    <dependency  org="com.west.judicial" name="CoreWorkbenchLibrary" rev="1.0.0.+"/>
+    <!-- Test dependencies for Java projects only... -->
+	<dependency org="junit" name="junit" rev="4.10"
+		conf="test->*,!source,!javadocs">
+		<exclude type="source" ext="jar" />
+		<exclude type="javadoc" ext="jar" />
+	</dependency>
+	<dependency org="org.testng" name="testng" rev="5.14.10"
+		conf="test->*,!source,!javadocs">
+		<exclude type="source" ext="jar" />
+		<exclude type="javadoc" ext="jar" />
+	</dependency>
+	<dependency org="org.springframework" name="spring-test"
+		rev="4.1.2.RELEASE" conf="test->*,!source,!javadocs">
+		<exclude type="source" ext="jar" />
+		<exclude type="javadoc" ext="jar" />
+	</dependency>
+	 <dependency org="org.powermock" name="powermock-api-mockito" rev="1.5.1"/>
+    <dependency org="org.powermock" name="powermock-module-junit4" rev="1.5.1"/>
+   
+    <dependency org="net.sf.ehcache" name="ehcache" rev="1.6.2" />
+    <!-- for smoketest framework-->
+    <dependency org="com.west.judicial" name="CommonServicesFramework" rev="3.0.0.+" />
+    
+    <!-- DEPENDENCIES FOR TRMR LOGGING -->
+    <!-- <dependency org="com.trgr.cobalt" name="infralogging" rev="20.7.1" />
+    <dependency org="com.trgr.cobalt" name="queuemiddleware" rev="20.7.1" />
+    <dependency org="com.trgr.cobalt" name="jms" rev="20.7.1" />
+    <dependency org="com.trgr.cobalt" name="dhbcore" rev="20.7.1" />
+    <dependency org="com.trgr.cobalt" name="com.ibm.mq" rev="20.7.1" />
+    <dependency org="com.trgr.cobalt" name="com.ibm.mqjms" rev="20.7.1" />
+    <dependency org="com.trgr.cobalt" name="connector" rev="20.7.1" /> 
+    <dependency org="com.trgr.cobalt" name="jta" rev="20.7.1" /> -->
+     
+     <dependency org="com.ibm" name="com.ibm.mqetclient" rev="7.0.1.0" />
+		<dependency org="com.ibm" name="com.ibm.mq" rev="7.0.1.0" />
+		<dependency org="com.ibm" name="com.ibm.mqjms" rev="7.0.1.0" />
+		<dependency org="com.ibm" name="com.ibm.mq.pcf" rev="7.0.1.0" />
+		<!-- <dependency org="com.west.judicial" name="CommonServicesFramework"
+			rev="3.0.0.+" /> -->
+		<!-- <dependency org="org.springframework" name="spring-web"
+		
+			rev="3.1.1.RELEASE" /> -->
+		<dependency org="org.aspectj" name="aspectjrt" rev="1.6.8" />
+		<dependency org="west-commons" name="oca" rev="3.4.0.19"/>
+<dependency org="west-commons" name="imsapi" rev="r4"/>
+		
+		<!-- <dependency org="org.aspectj" name="aspectjweaver" rev="1.6.8" /> -->
+		
+		<!-- This exclude was necessitated by a failure to fetch the spring-test 
+			source jar artifact, because of how it is named, viz. spring-test-3.1.0.RC1-source.jar -->
+
+		<!-- TRMR logging jars -->
+		<dependency org="com.trgr.cobalt.infrastructure" name="infra-logging" rev="20.7.1" />
+		<dependency org="com.trgr.cobalt" name="queuemiddleware"
+			rev="20.7.1" />
+		<dependency org="com.trgr.cobalt" name="jms" rev="20.7.1" />
+		<dependency org="com.trgr.cobalt" name="dhbcore" rev="20.7.1" />
+		<dependency org="com.trgr.cobalt" name="connector" rev="20.7.1" />
+		<dependency org="com.trgr.cobalt" name="jta" rev="20.7.1" />
+		<dependency name="spring-core" rev="3.1.1.RELEASE" org="org.springframework" />
+		<dependency org="javax.ws.rs" name="jsr311-api" rev="1.0">
+			<exclude org="javax.ws.rs" name="jsr311-api" />
+		</dependency>
+		<dependency org="org.codehaus.sonar-plugins" name="sonar-ant-task" rev="2.2"/>
+		<dependency org="org.sonarsource.scanner.ant" name="sonarqube-ant-task" rev="2.4.1"/>
+	<dependency org="javax.ws.rs" name="jsr311-api" rev="1.1.1"
+		conf="compile->runtime(default)" force="true" />
+    <!-- This exclude was necessitated by a failure to fetch the spring-test source jar
+         artifact, because of how it is named, viz. spring-test-3.1.0.RC1-source.jar
+    -->
+    <exclude type="source" ext="jar"/>
+	<exclude type="javadocs" ext="jar"/>
+
+    <!-- Sample deployment dependency (webapps only)... -->
+    <!-- <dependency org="com.west.judicial" name="OtherProject" conf="deploy->deploy" /> -->
+     <conflict org="commons-logging" rev="1.1.1" />
+    <conflict org="javax.ws.rs" rev="1.1.1" />
+    <conflict org="log4j"  rev="1.2.16" />
+    <conflict manager="all" />
+  </dependencies>
+</ivy-module>
