@@ -64,15 +64,22 @@ public class UUIDGeneratorTest {
 
 		
 
-//	@Test
-//	public void testGenerateUuidNotNull() throws IOException, InterruptedException{
+	@Test
+	public void testGenerateUuidNotNull() throws IOException, InterruptedException{
 //		Object obj =true;
 //		
 //		UUIDFactory other = (UUIDFactory) obj;
 //	   assertSame(other.equals(obj), true);
 //	    assertEquals(obj, other);
-//		
-//	}
+		
+		UUIDFactory u = new UUIDFactory();
+
+	    Object obj = false;
+
+	    u.equals(obj);
+	    assertNotNull(u);
+		
+	}
 	
 	
 }
